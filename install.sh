@@ -43,6 +43,23 @@ ask() {
   printf -v "$var_name" '%s' "$value"
 }
 
+
+ask_optional() {
+  local var_name="$1"
+  local prompt="$2"
+  local default_value="${3:-}"
+  local value=""
+
+  if [ -n "$default_value" ]; then
+    read -rp "$prompt [$default_value]: " value
+    value="${value:-$default_value}"
+  else
+    read -rp "$prompt: " value
+  fi
+
+  printf -v "$var_name" '%s' "$value"
+}
+
 ask_secret() {
   local var_name="$1"
   local prompt="$2"
@@ -129,7 +146,7 @@ ask TS_PORT "TeamSpeak voice port" "30012"
 ask TS_NICKNAME "TeamSpeak bot nickname" "DiscordBridge"
 ask TS_CHANNEL_ID "Fallback TeamSpeak channel ID"
 ask_secret TS_PASSWORD "TeamSpeak server password"
-ask TS_CHANNEL_PASSWORD "TeamSpeak channel password, empty if none" ""
+ask_optional TS_CHANNEL_PASSWORD "TeamSpeak channel password, empty if none" ""
 
 echo
 ask TS_WEBQUERY_HOST "TeamSpeak WebQuery host/IP" "$TS_HOST"
