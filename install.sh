@@ -135,7 +135,12 @@ ask TS_WEBQUERY_SERVER_ID "TeamSpeak WebQuery server ID" "1"
 ask_secret TS_WEBQUERY_API_KEY "TeamSpeak WebQuery API key"
 
 echo
-ask BRIDGE_LICENSE_KEY "Beta license key" "beta-local-test-001"
+DEFAULT_BETA_LICENSE_KEY="beta-local-test-001"
+ask BRIDGE_LICENSE_KEY "Beta license key, press ENTER to use default" "$DEFAULT_BETA_LICENSE_KEY"
+
+if [ -z "${BRIDGE_LICENSE_KEY:-}" ]; then
+  BRIDGE_LICENSE_KEY="$DEFAULT_BETA_LICENSE_KEY"
+fi
 
 set_env() {
   local key="$1"
