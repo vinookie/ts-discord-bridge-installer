@@ -20,6 +20,15 @@ warn() {
   echo "[warn] $*"
 }
 
+
+read_from_tty() {
+  if [ -r /dev/tty ]; then
+    read "$@" </dev/tty
+  else
+    read "$@"
+  fi
+}
+
 fail() {
   echo "[error] $*" >&2
   exit 1
@@ -32,11 +41,11 @@ ask() {
   local value=""
 
   if [ -n "$default_value" ]; then
-    read -rp "$prompt [$default_value]: " value
+    read_from_tty -rp "$prompt [$default_value]: " value
     value="${value:-$default_value}"
   else
     while [ -z "$value" ]; do
-      read -rp "$prompt: " value
+      read_from_tty -rp "$prompt: " value
     done
   fi
 
@@ -51,10 +60,10 @@ ask_optional() {
   local value=""
 
   if [ -n "$default_value" ]; then
-    read -rp "$prompt [$default_value]: " value
+    read_from_tty -rp "$prompt [$default_value]: " value
     value="${value:-$default_value}"
   else
-    read -rp "$prompt: " value
+    read_from_tty -rp "$prompt: " value
   fi
 
   printf -v "$var_name" '%s' "$value"
@@ -66,7 +75,7 @@ ask_secret() {
   local value=""
 
   while [ -z "$value" ]; do
-    read -rsp "$prompt: " value
+    read_from_tty -rsp "$prompt: " value
     echo
   done
 
@@ -163,6 +172,16 @@ if [ -z "${BRIDGE_LICENSE_KEY:-}" ]; then
   BRIDGE_LICENSE_KEY="$DEFAULT_BETA_LICENSE_KEY"
 fi
 
+
+require_value() {
+  local var_name="$1"
+  local value="${!var_name:-}"
+
+  if [ -z "$value" ]; then
+    fail "$var_name is required but empty. Please run the installer in an interactive terminal."
+  fi
+}
+
 set_env() {
   local key="$1"
   local value="$2"
@@ -176,6 +195,21 @@ set_env() {
     echo "${key}=${value}" >> .env
   fi
 }
+
+
+require_value DISCORD_TOKEN
+require_value DISCORD_GUILD_ID
+require_value DISCORD_STATUS_CHANNEL_ID
+require_value TS_HOST
+require_value TS_PORT
+require_value TS_NICKNAME
+require_value TS_CHANNEL_ID
+require_value TS_WEBQUERY_HOST
+require_value TS_WEBQUERY_PORT
+require_value TS_WEBQUERY_PROTOCOL
+require_value TS_WEBQUERY_SERVER_ID
+require_value TS_WEBQUERY_API_KEY
+require_value BRIDGE_LICENSE_KEY
 
 set_env DISCORD_TOKEN "$DISCORD_TOKEN"
 set_env DISCORD_GUILD_ID "$DISCORD_GUILD_ID"
@@ -259,7 +293,7 @@ echo
 echo "Do NOT use 'docker compose down -v' unless you want to delete the persistent TeamSpeak identity/settings."
 echo
 
-read -rp "Start the bridge now? [y/N]: " START_NOW
+read_from_tty -rp "Start the bridge now? [y/N]: " START_NOW
 
 case "$START_NOW" in
   y|Y|yes|YES)
