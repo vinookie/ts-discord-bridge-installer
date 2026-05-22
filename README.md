@@ -350,6 +350,17 @@ Dieses Projekt ist ein inoffizielles Community-Projekt.
 
 Es ist nicht mit TeamSpeak, Discord oder anderen genannten Projekten verbunden.
 
+## Privacy / License Check
+
+The public beta build performs a small license validation request to the maintainer's license server.
+
+The current beta uses a shared beta license key and does not require a user account. The license server does not intentionally collect Discord tokens, TeamSpeak credentials, Discord guild IDs, TeamSpeak hostnames, or channel IDs.
+
+Like with normal web server access, the license server or reverse proxy may process technical access data such as IP address, timestamp, request path, HTTP status code, and user-agent in server logs. These logs are used for operation, troubleshooting, abuse prevention, and security.
+
+More details: see `PRIVACY.md`.
+
+
 ## Credits / Inspiration
 
 TS Discord Bridge is an independent TeamSpeak ↔ Discord voice bridge.
