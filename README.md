@@ -74,7 +74,12 @@ BRIDGE_LICENSE_KEY=beta-local-test-001
 Wenn du beim Installer bei der License-Key-Frage einfach Enter drückst, wird dieser Beta-Key automatisch genutzt.
 
 Schnellinstallation
+
+Linux / WSL2:
 curl -fsSL https://raw.githubusercontent.com/vinookie/ts-discord-bridge-installer/main/install.sh | bash
+
+Windows PowerShell ohne WSL2-Distro:
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; $Url="https://raw.githubusercontent.com/vinookie/ts-discord-bridge-installer/main/install.ps1"; $Out="$env:TEMP\ts-discord-bridge-install.ps1"; Invoke-WebRequest $Url -OutFile $Out; powershell -ExecutionPolicy Bypass -File $Out
 
 Der Installer erstellt:
 
