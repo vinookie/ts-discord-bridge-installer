@@ -102,6 +102,10 @@ curl -fsSL "$BASE_URL/docker-compose.yml" -o docker-compose.yml
 info "Downloading .env.example..."
 curl -fsSL "$BASE_URL/.env.example" -o .env.example
 
+info "Downloading bridge.sh..."
+curl -fsSL "$BASE_URL/bridge.sh" -o bridge.sh
+chmod +x bridge.sh
+
 if [ ! -f .env ]; then
   cp .env.example .env
 fi
@@ -198,16 +202,22 @@ echo
 echo "Important commands:"
 echo
 echo "Start:"
-echo "  cd $INSTALL_DIR && docker compose up -d"
+echo "  cd $INSTALL_DIR && ./bridge.sh start"
 echo
 echo "Logs:"
-echo "  cd $INSTALL_DIR && docker compose logs -f -t --tail=200"
+echo "  cd $INSTALL_DIR && ./bridge.sh logs"
 echo
 echo "Status:"
-echo "  cd $INSTALL_DIR && docker compose ps"
+echo "  cd $INSTALL_DIR && ./bridge.sh status"
 echo
 echo "Stop:"
-echo "  cd $INSTALL_DIR && docker compose down"
+echo "  cd $INSTALL_DIR && ./bridge.sh stop"
+echo
+echo "Update:"
+echo "  cd $INSTALL_DIR && ./bridge.sh update"
+echo
+echo "Health check:"
+echo "  cd $INSTALL_DIR && ./bridge.sh check"
 echo
 echo "Do NOT use 'docker compose down -v' unless you want to delete the persistent TeamSpeak identity/settings."
 echo
@@ -225,6 +235,6 @@ case "$START_NOW" in
     ;;
   *)
     echo "Not started. Run this later:"
-    echo "cd $INSTALL_DIR && docker compose up -d"
+    echo "cd $INSTALL_DIR && ./bridge.sh start"
     ;;
 esac
