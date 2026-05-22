@@ -2,6 +2,8 @@
 
 Ein einfacher Installer für die öffentliche Docker-Beta der **TS Discord Bridge**.
 
+Der Installer funktioniert auf Linux-Servern/VPS sowie unter Windows über WSL2 mit Docker/Docker Compose v2.
+
 Die TS Discord Bridge verbindet einen **TeamSpeak-Voice-Channel** mit einem **Discord-Voice-Channel**.
 
 ```txt
