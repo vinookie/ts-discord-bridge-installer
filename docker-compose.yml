@@ -1,0 +1,46 @@
+services:
+  ts-discord-bridge:
+    image: vinookie/ts-discord-bridge:4.5.6-beta
+    container_name: ts-discord-bridge
+    restart: unless-stopped
+    network_mode: host
+    env_file:
+      - .env
+    volumes:
+      - ts-discord-bridge-data:/data
+    depends_on:
+      - rust-audio-sidecar
+
+  rust-audio-sidecar:
+    image: vinookie/ts-discord-bridge-sidecar:4.5.6-beta
+    container_name: rust-audio-sidecar
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      RUST_SIDECAR_PORT: ${RUST_SIDECAR_PORT:-41000}
+      NODE_PCM_LISTEN_PORT: ${NODE_PCM_LISTEN_PORT:-41001}
+      DC_TO_TS_SIDECAR_PORT: ${DC_TO_TS_SIDECAR_PORT:-41002}
+      NODE_TS_OPUS_LISTEN_PORT: ${NODE_TS_OPUS_LISTEN_PORT:-41003}
+
+      SIDECAR_MAX_QUEUE_FRAMES: ${SIDECAR_MAX_QUEUE_FRAMES:-12}
+      SIDECAR_PREBUFFER_FRAMES: ${SIDECAR_PREBUFFER_FRAMES:-2}
+      SIDECAR_MAX_IDLE_MS: ${SIDECAR_MAX_IDLE_MS:-3000}
+      DISCORD_TO_TS_MAX_QUEUE_FRAMES: ${DISCORD_TO_TS_MAX_QUEUE_FRAMES:-8}
+      DISCORD_TO_TS_PREBUFFER_FRAMES: ${DISCORD_TO_TS_PREBUFFER_FRAMES:-1}
+      DISCORD_TO_TS_MAX_IDLE_MS: ${DISCORD_TO_TS_MAX_IDLE_MS:-1500}
+
+      SIDECAR_LOG_INTERVAL_MS: ${SIDECAR_LOG_INTERVAL_MS:-0}
+      SIDECAR_STARTUP_LOGS: ${SIDECAR_STARTUP_LOGS:-0}
+      SIDECAR_INPUT_CHANNEL_CAPACITY: ${SIDECAR_INPUT_CHANNEL_CAPACITY:-256}
+
+      BRIDGE_LICENSE_KEY: ${BRIDGE_LICENSE_KEY}
+      BRIDGE_LICENSE_CHECK_INTERVAL_MS: ${BRIDGE_LICENSE_CHECK_INTERVAL_MS:-43200000}
+      BRIDGE_LICENSE_TOLERATED_FAILURES: ${BRIDGE_LICENSE_TOLERATED_FAILURES:-1}
+      BRIDGE_VERSION: ${BRIDGE_VERSION:-4.5.6-beta}
+
+      DISCORD_GUILD_ID: ${DISCORD_GUILD_ID}
+      TS_HOST: ${TS_HOST}
+      TS_PORT: ${TS_PORT}
+
+volumes:
+  ts-discord-bridge-data:
