@@ -535,3 +535,9 @@ This project is not affiliated with TeamSpeak, Discord, `clusterzx/ts6-manager`,
 
 Dieses Projekt ist nicht mit TeamSpeak, Discord oder anderen genannten Projekten verbunden.
 
+---
+
+## Preview
+
+![TS Discord Bridge Preview](https://i.ibb.co/V0pTdq9q/42fb761d-96d4-4f4a-9ac1-c0a335b0c9e4.png)
+
