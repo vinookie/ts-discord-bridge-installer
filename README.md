@@ -2,21 +2,32 @@
 
 Ein einfacher Installer für die öffentliche Docker-Beta der **TS Discord Bridge**.
 
-Die TS Discord Bridge verbindet einen **TeamSpeak-Voice-Channel** mit einem **Discord-Voice-Channel**. Audio kann in beide Richtungen übertragen werden:
+Die TS Discord Bridge verbindet einen **TeamSpeak-Voice-Channel** mit einem **Discord-Voice-Channel**.
 
 ```txt
 TeamSpeak -> Discord
 Discord   -> TeamSpeak
-Das Projekt läuft als Selfhosted-Docker-Setup und besteht aus zwei Containern:
 
-vinookie/ts-discord-bridge
-vinookie/ts-discord-bridge-sidecar
+Der Installer richtet die Bridge als Selfhosted-Docker-Setup ein und führt dich durch die erste Konfiguration.
 
-Der Installer richtet beide Container ein, erstellt eine .env-Datei und führt dich durch die erste Konfiguration.
+Was wird installiert?
 
-Was macht die Bridge?
+Die Bridge besteht aus zwei Docker-Containern:
 
-Die Bridge verbindet TeamSpeak und Discord über einen Bot.
+vinookie/ts-discord-bridge:4.5.6-beta
+vinookie/ts-discord-bridge-sidecar:4.5.6-beta
+
+Bedeutung:
+
+ts-discord-bridge
+= Hauptcontainer für Discord, TeamSpeak, Slash Commands, WebQuery und Bridge-Logik
+
+ts-discord-bridge-sidecar
+= Rust-Audio-Sidecar für Audio-Decoding, Mixing und Encoding
+
+Beide Container werden benötigt.
+
+Was macht die VoiceBridge?
 
 Typischer Ablauf:
 
@@ -24,34 +35,20 @@ Typischer Ablauf:
 2. Die Bridge startet automatisch.
 3. Der Discord-Bot joint diesen Discord-Voice-Channel.
 4. Der TeamSpeak-Bot verbindet sich mit deinem TeamSpeak-Server.
-5. Per TeamSpeak WebQuery wird optional der passendste/vollste TeamSpeak-Channel erkannt.
+5. Optional erkennt WebQuery den passenden/vollsten TeamSpeak-Channel.
 6. Audio wird zwischen TeamSpeak und Discord übertragen.
 
-Unterstützte Funktionen in der aktuellen Beta:
+Unterstützte Funktionen in der Beta:
 
 - TeamSpeak -> Discord Voice
 - Discord -> TeamSpeak Voice
-- Rust-Audio-Sidecar für Decode/Mix/Encode
+- Rust-Audio-Sidecar
 - automatische Bridge für registrierte Discord-User
 - automatisches Verlassen nach Inaktivität
 - TeamSpeak WebQuery Channel-Erkennung
 - Auswahl des vollsten TeamSpeak-Channels
 - persistente TeamSpeak-Identity über Docker-Volume
 - Beta-Lizenzcheck über zentralen Lizenzserver
-Schnellinstallation
-
-Auf einem Linux-Server mit Docker:
-
-curl -fsSL https://raw.githubusercontent.com/vinookie/ts-discord-bridge-installer/main/install.sh | bash
-
-Der Installer fragt dich nach den wichtigsten Daten und erstellt danach automatisch:
-
-~/ts-discord-bridge/docker-compose.yml
-~/ts-discord-bridge/.env
-~/ts-discord-bridge/.env.example
-
-Am Ende kannst du die Bridge direkt starten lassen.
-
 Voraussetzungen
 
 Du brauchst:
@@ -60,45 +57,37 @@ Du brauchst:
 - Docker
 - Docker Compose v2
 - Discord Bot Token
-- Discord Server/Guild ID
+- Discord Guild/Server ID
 - Discord Channel ID für Status/Logs
 - TeamSpeak Serverdaten
 - TeamSpeak WebQuery API Key
 - Beta License Key
 
-Der aktuelle öffentliche Beta-Key ist:
+Aktueller öffentlicher Beta-Key:
 
 BRIDGE_LICENSE_KEY=beta-local-test-001
 
-Wenn du beim Installer bei der License-Key-Frage einfach Enter drückst, wird dieser Beta-Key automatisch verwendet.
+Wenn du beim Installer bei der License-Key-Frage einfach Enter drückst, wird dieser Beta-Key automatisch genutzt.
 
-Docker Images
+Schnellinstallation
+curl -fsSL https://raw.githubusercontent.com/vinookie/ts-discord-bridge-installer/main/install.sh | bash
 
-Die Images werden von Docker Hub gezogen:
+Der Installer erstellt:
 
-docker pull vinookie/ts-discord-bridge:4.5.6-beta
-docker pull vinookie/ts-discord-bridge-sidecar:4.5.6-beta
-
-Beide Images werden benötigt.
-
-ts-discord-bridge
-= Hauptcontainer für Discord, TeamSpeak, Slash Commands, WebQuery und Bridge-Logik
-
-ts-discord-bridge-sidecar
-= Rust-Audio-Sidecar für Audio-Decoding, Mixing und Encoding
-
-Normalerweise musst du diese Images nicht manuell ziehen. Der Installer macht das automatisch.
-
+~/ts-discord-bridge/docker-compose.yml
+~/ts-discord-bridge/.env
+~/ts-discord-bridge/.env.example
+~/ts-discord-bridge/bridge.sh
 Installation Schritt für Schritt
 1. Installer starten
 curl -fsSL https://raw.githubusercontent.com/vinookie/ts-discord-bridge-installer/main/install.sh | bash
 2. Fragen beantworten
 
-Der Installer fragt dich nach:
+Der Installer fragt nach:
 
 Discord Bot Token
 Discord Guild/Server ID
-Discord Status/Log Channel ID
+Discord Status-/Log-Channel ID
 
 TeamSpeak Host/IP
 TeamSpeak Voice Port
@@ -114,7 +103,7 @@ TeamSpeak WebQuery Server ID
 TeamSpeak WebQuery API Key
 
 Beta License Key
-3. Bridge starten
+3. Optional direkt starten
 
 Am Ende fragt der Installer:
 
@@ -122,11 +111,43 @@ Start the bridge now? [y/N]:
 
 Mit y startet die Bridge direkt.
 
-Mit n kannst du sie später manuell starten:
+Mit n kannst du sie später manuell starten.
+
+Nach der Installation bedienen
+
+Nach der Installation brauchst du den Installer nicht mehr.
+
+Wechsle in den Installationsordner:
 
 cd ~/ts-discord-bridge
-docker compose up -d
-Wichtige Befehle
+
+Dann kannst du die Bridge über das mitgelieferte Script steuern:
+
+./bridge.sh start
+./bridge.sh stop
+./bridge.sh restart
+./bridge.sh status
+./bridge.sh logs
+./bridge.sh logs-once
+./bridge.sh update
+./bridge.sh stats
+./bridge.sh check
+
+Bedeutung:
+
+./bridge.sh start       Startet die Bridge
+./bridge.sh stop        Stoppt die Bridge
+./bridge.sh restart     Startet die Bridge neu
+./bridge.sh status      Zeigt den Container-Status
+./bridge.sh logs        Zeigt Live-Logs
+./bridge.sh logs-once   Zeigt die letzten 200 Logzeilen
+./bridge.sh update      Zieht neue Docker-Images und startet neu
+./bridge.sh stats       Zeigt CPU/RAM live
+./bridge.sh check       Kurzer Status-, RAM- und Fehlercheck
+Wichtige Docker-Befehle
+
+Direkt mit Docker Compose geht es auch:
+
 Starten
 cd ~/ts-discord-bridge
 docker compose up -d
@@ -136,8 +157,6 @@ docker compose logs -f -t --tail=200
 Status prüfen
 cd ~/ts-discord-bridge
 docker compose ps
-CPU/RAM anzeigen
-docker stats ts-discord-bridge rust-audio-sidecar
 Stoppen
 cd ~/ts-discord-bridge
 docker compose down
@@ -146,26 +165,24 @@ Nicht benutzen, außer du willst wirklich die persistenten Daten löschen:
 
 docker compose down -v
 
-down -v löscht das Docker-Volume. Dadurch gehen unter anderem die TeamSpeak-Identity und gespeicherte Bridge-Daten verloren.
+down -v löscht das Docker-Volume. Dadurch gehen unter anderem TeamSpeak-Identity und gespeicherte Bridge-Daten verloren.
 
 Persistente Daten
 
-Die Bridge speichert wichtige Laufzeitdaten in einem Docker-Volume.
-
-Dazu gehören unter anderem:
+Die Bridge speichert wichtige Laufzeitdaten in einem Docker-Volume:
 
 TeamSpeak Identity
 registrierte Discord-User
 Volume-/Audio-Einstellungen
 Lizenz-Cache
 
-Deshalb sollte das Volume nicht gelöscht werden.
+Dieses Volume sollte nicht gelöscht werden.
 
 Lizenz / Beta
 
 Die aktuelle Beta nutzt einen zentralen Lizenzcheck.
 
-Der Nutzer muss in der .env nur den License-Key setzen:
+In der .env steht nur der License-Key:
 
 BRIDGE_LICENSE_KEY=beta-local-test-001
 
@@ -182,9 +199,6 @@ Der Discord Bot braucht typischerweise:
 - Voice Channel sprechen
 - Slash Commands registrieren/nutzen
 - Nachrichten im Status-/Log-Channel senden
-
-Achte darauf, dass der Bot auf deinem Discord Server eingeladen ist und die nötigen Rechte besitzt.
-
 TeamSpeak Hinweise
 
 Der TeamSpeak Bot braucht Zugriff auf deinen TeamSpeak Server.
@@ -201,7 +215,13 @@ Für automatische Channel-Erkennung wird TeamSpeak WebQuery benötigt.
 
 WebQuery
 
-Die WebQuery-Daten werden in der .env gesetzt:
+WebQuery wird unter anderem genutzt für:
+
+- TeamSpeak Channel-Erkennung
+- Auswahl des vollsten TeamSpeak-Channels
+- bessere automatische Bridge-Zielauswahl
+
+Wichtige .env-Werte:
 
 TS_WEBQUERY_ENABLED=true
 TS_WEBQUERY_HOST=CHANGE_ME
@@ -209,22 +229,22 @@ TS_WEBQUERY_PORT=30036
 TS_WEBQUERY_PROTOCOL=http
 TS_WEBQUERY_SERVER_ID=1
 TS_WEBQUERY_API_KEY=CHANGE_ME
+Update
+cd ~/ts-discord-bridge
+./bridge.sh update
 
-WebQuery wird unter anderem genutzt für:
-
-- TeamSpeak Channel-Erkennung
-- Auswahl des vollsten TeamSpeak Channels
-- bessere automatische Bridge-Zielauswahl
-Typische Probleme
-Container startet nicht
-
-Logs prüfen:
+Oder manuell:
 
 cd ~/ts-discord-bridge
-docker compose logs -f -t --tail=200
+docker compose pull
+docker compose up -d
+Typische Probleme
+Container startet nicht
+cd ~/ts-discord-bridge
+./bridge.sh logs
 Lizenzfehler
 
-Prüfe in deiner .env:
+Prüfe:
 
 BRIDGE_LICENSE_KEY=beta-local-test-001
 Discord Bot verbindet nicht
@@ -252,27 +272,6 @@ Prüfe:
 - TS_WEBQUERY_PORT korrekt?
 - TS_WEBQUERY_API_KEY korrekt?
 - WebQuery auf deinem TeamSpeak Server aktiviert?
-Update
-
-Zum Aktualisieren auf den neuesten Beta-Tag:
-
-cd ~/ts-discord-bridge
-docker compose pull
-docker compose up -d
-Deinstallation
-
-Nur Container stoppen:
-
-cd ~/ts-discord-bridge
-docker compose down
-
-Komplett entfernen inklusive persistenter Daten:
-
-cd ~/ts-discord-bridge
-docker compose down -v
-
-Achtung: Dadurch wird die TeamSpeak-Identity und gespeicherte Bridge-Konfiguration gelöscht.
-
 Sicherheit
 
 Teile niemals öffentlich:
@@ -282,12 +281,9 @@ Discord Bot Token
 TeamSpeak Passwort
 TeamSpeak WebQuery API Key
 
-Die Datei .env wird vom Installer mit eingeschränkten Rechten angelegt:
+Die Datei .env wird vom Installer mit eingeschränkten Rechten angelegt.
 
--rw-------
 Projektstatus
-
-Diese Version ist eine öffentliche Beta.
 
 Aktueller Docker-Tag:
 
