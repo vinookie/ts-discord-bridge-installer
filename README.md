@@ -238,6 +238,59 @@ Oder manuell:
 cd ~/ts-discord-bridge
 docker compose pull
 docker compose up -d
+## Discord Commands
+
+Die Bridge wird in Discord über Slash Commands gesteuert. Die Commands erscheinen im Discord-Chat, sobald der Bot auf dem Server ist und die Slash Commands registriert wurden.
+
+Wichtige Commands:
+
+- `/bridge join`
+  Startet die Bridge manuell. Der Bot verbindet Discord Voice mit TeamSpeak. Wenn WebQuery aktiv ist, kann die Bridge den passenden oder vollsten TeamSpeak-Channel erkennen.
+
+- `/bridge leave`
+  Stoppt die aktive Bridge manuell. Der Discord-Bot verlässt den Voice Channel und die Audio-Bridge wird beendet.
+
+- `/bridge register`
+  Registriert deinen Discord-User für Auto-Bridge. Danach kann dein Join in einen Discord-Voice-Channel die Bridge automatisch starten.
+
+- `/bridge unregister`
+  Entfernt deinen Discord-User wieder aus der Auto-Bridge-Liste. Danach startet dein Join die Bridge nicht mehr automatisch.
+
+- `/bridge registered`
+  Zeigt die aktuell registrierten Discord-User an.
+
+- `/volume`
+  Öffnet oder steuert Lautstärke-Einstellungen, je nach aktueller Bot-Version. Wird genutzt, um Audio zwischen Discord und TeamSpeak anzupassen.
+
+Auto-Bridge Verhalten:
+
+1. Ein registrierter Discord-User joint einen Discord Voice Channel.
+2. Die Bridge startet automatisch, wenn noch keine passende Bridge aktiv ist.
+3. Der Discord-Bot joint den Discord Voice Channel.
+4. Der TeamSpeak-Bot verbindet sich mit TeamSpeak.
+5. WebQuery wählt optional den passenden oder vollsten TeamSpeak Channel.
+6. Audio läuft zwischen TeamSpeak und Discord.
+
+Wenn niemand mehr im Discord-Bridge-Channel ist, kann die Bridge nach einer Wartezeit automatisch verlassen.
+
+Wichtiger `.env`-Wert:
+
+`BRIDGE_AUTO_LEAVE_MS=300000`
+
+`300000` entspricht 5 Minuten.
+
+Wenn Commands nicht sichtbar sind:
+
+- `DISCORD_TOKEN` prüfen
+- `DISCORD_GUILD_ID` prüfen
+- Bot auf den richtigen Discord Server einladen
+- Bot braucht Slash-Command-Rechte
+- Bot braucht Voice-Rechte
+- Container neu starten
+- Logs prüfen mit: `./bridge.sh logs`
+
+
+
 Typische Probleme
 Container startet nicht
 cd ~/ts-discord-bridge
