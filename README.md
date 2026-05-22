@@ -349,3 +349,14 @@ Hinweis
 Dieses Projekt ist ein inoffizielles Community-Projekt.
 
 Es ist nicht mit TeamSpeak, Discord oder anderen genannten Projekten verbunden.
+
+## Credits / Inspiration
+
+TS Discord Bridge is an independent TeamSpeak ↔ Discord voice bridge.
+
+Credits go to:
+
+- `clusterzx/ts6-manager` for public work and discussion around TS6 connectivity and TeamSpeak client behavior. The TeamSpeak client/runtime used by this bridge was adapted for this project so TeamSpeak audio can be accepted continuously and forwarded into the bridge pipeline.
+- `0xpr03/voice-bridge` as a public reference and inspiration for the general idea of a TeamSpeak ↔ Discord voice bridge.
+
+This project is not affiliated with TeamSpeak, Discord, `clusterzx/ts6-manager`, or `0xpr03/voice-bridge`.
