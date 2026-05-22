@@ -14,8 +14,8 @@ Was wird installiert?
 
 Die Bridge besteht aus zwei Docker-Containern:
 
-vinookie/ts-discord-bridge:4.5.6-beta
-vinookie/ts-discord-bridge-sidecar:4.5.6-beta
+vinookie/ts-discord-bridge:4.5.7-beta
+vinookie/ts-discord-bridge-sidecar:4.5.7-beta
 
 Bedeutung:
 
@@ -340,7 +340,7 @@ Projektstatus
 
 Aktueller Docker-Tag:
 
-4.5.6-beta
+4.5.7-beta
 
 Ältere Beta-Tags werden nicht unterstützt.
 
