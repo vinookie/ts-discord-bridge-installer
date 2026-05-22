@@ -209,6 +209,26 @@ docker pull "$MAIN_IMAGE"
 info "Pulling $SIDECAR_IMAGE"
 docker pull "$SIDECAR_IMAGE"
 
+
+show_beta_validation_notice() {
+  line
+  echo "Beta validation notice"
+  line
+  echo
+  echo "Important:"
+  echo "When the bridge starts, it briefly connects to the maintainer license server"
+  echo "to validate whether this public beta version is still active/current."
+  echo
+  echo "The current beta uses a shared beta key and does not require a user account."
+  echo "Like normal web server access, technical access data such as IP address,"
+  echo "timestamp, request path, HTTP status and user-agent may appear in server logs."
+  echo
+  echo "More details are documented in PRIVACY.md."
+  echo
+}
+
+show_beta_validation_notice
+
 line
 echo "Ready"
 line
