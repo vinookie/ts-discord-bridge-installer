@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-$Version = "4.5.7-beta"
+$Version = "4.5.8-beta"
 $InstallDir = if ($env:INSTALL_DIR) { $env:INSTALL_DIR } else { Join-Path $env:USERPROFILE "ts-discord-bridge" }
 $BaseUrl = "https://raw.githubusercontent.com/vinookie/ts-discord-bridge-installer/main"
 

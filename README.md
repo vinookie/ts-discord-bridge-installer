@@ -19,8 +19,8 @@ Der Installer richtet die Bridge als **Selfhosted-Docker-Setup** ein und führt 
 |---|---|
 | Projekt | TeamSpeak ↔ Discord Voice Bridge |
 | Installation | Docker / Docker Compose |
-| Hauptcontainer | `vinookie/ts-discord-bridge:4.5.7-beta` |
-| Audio-Sidecar | `vinookie/ts-discord-bridge-sidecar:4.5.7-beta` |
+| Hauptcontainer | `vinookie/ts-discord-bridge:4.5.8-beta` |
+| Audio-Sidecar | `vinookie/ts-discord-bridge-sidecar:4.5.8-beta` |
 | Linux | unterstützt |
 | Windows mit WSL2 | unterstützt |
 | Windows ohne WSL2-Distro | getestet mit Docker Desktop im Linux-Container-Modus |
@@ -71,8 +71,8 @@ Die Bridge besteht aus zwei Docker-Containern:
 
 | Container | Image | Aufgabe |
 |---|---|---|
-| `ts-discord-bridge` | `vinookie/ts-discord-bridge:4.5.7-beta` | Discord, TeamSpeak, Slash Commands, WebQuery und Bridge-Logik |
-| `ts-discord-bridge-sidecar` | `vinookie/ts-discord-bridge-sidecar:4.5.7-beta` | Rust-Audio-Sidecar für Audio-Decoding, Mixing und Encoding |
+| `ts-discord-bridge` | `vinookie/ts-discord-bridge:4.5.8-beta` | Discord, TeamSpeak, Slash Commands, WebQuery und Bridge-Logik |
+| `ts-discord-bridge-sidecar` | `vinookie/ts-discord-bridge-sidecar:4.5.8-beta` | Rust-Audio-Sidecar für Audio-Decoding, Mixing und Encoding |
 
 Beide Container werden benötigt.
 
@@ -528,7 +528,7 @@ This project is not affiliated with TeamSpeak, Discord, `clusterzx/ts6-manager`,
 
 | Wert | Status |
 |---|---|
-| Docker-Tag | `4.5.7-beta` |
+| Docker-Tag | `4.5.8-beta` |
 | Status | öffentliche Beta |
 | Ältere Beta-Tags | nicht unterstützt |
 | Projektart | inoffizielles Community-Projekt |
