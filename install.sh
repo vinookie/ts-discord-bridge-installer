@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VERSION="4.5.8-beta"
+VERSION="5.0.1-beta"
 INSTALL_DIR="${INSTALL_DIR:-$HOME/ts-discord-bridge}"
 BASE_URL="https://raw.githubusercontent.com/vinookie/ts-discord-bridge-installer/main"
 

@@ -10,7 +10,7 @@ services:
       - bridge-internal
 
   ts-discord-bridge:
-    image: vinookie/ts-discord-bridge:4.5.8-beta
+    image: vinookie/ts-discord-bridge:5.0.1-beta
     container_name: ts-discord-bridge
     hostname: ts-discord-bridge
     restart: unless-stopped
@@ -40,7 +40,7 @@ services:
           - bridge-node
 
   rust-audio-sidecar:
-    image: vinookie/ts-discord-bridge-sidecar:4.5.8-beta
+    image: vinookie/ts-discord-bridge-sidecar:5.0.1-beta
     container_name: rust-audio-sidecar
     hostname: rust-audio-sidecar
     restart: unless-stopped
