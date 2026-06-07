@@ -358,6 +358,19 @@ TS_WEBQUERY_API_KEY=CHANGE_ME
 
 ---
 
+### Bots bei der vollsten TeamSpeak-Channel-Auswahl ignorieren
+
+Wenn WebQuery aktiv ist, kann die Bridge Bots/MusicBots bei der Ermittlung des vollsten TeamSpeak-Channels ignorieren.
+
+Wichtige `.env`-Werte:
+
+`TS_WEBQUERY_IGNORE_SERVER_GROUP_IDS=14,17`
+
+`TS_WEBQUERY_IGNORE_CLIENT_UIDS=UID1,UID2,UID3`
+
+Damit zählen z.B. Clients mit den Servergruppen `Bridge` oder `MusicBot` nicht als echte Nutzer.
+
+
 ## Discord Commands
 
 Die Bridge wird in Discord über Slash Commands gesteuert. Die Commands erscheinen im Discord-Chat, sobald der Bot auf dem Server ist und die Slash Commands registriert wurden.
